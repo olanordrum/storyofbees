@@ -1,22 +1,28 @@
 
+var margin = {top:10, right:10, bottom: 10, left: 10},
+width = 1150 - margin.left - margin.right,
+height = 700 - margin.top - margin.bottom;
 
-var w = 1150;
-var h = 690;
 
-var canvas = d3.select("#myVis")
-		.append("svg")
-		.attr("width",w)
-		.attr("height",h)
-		.style("background-color","white")
 
-var g = canvas.append("g")
-	.attr("transform",
-		  "translate("+ 50+"," + 50+ ")")
+
+
+
+const canvas = d3.select("#myVis")
+        .append("svg") //append svg to body
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+		    .style("background-color","white")
+
+            .append("g")
+            .attr("transform", "translate("+ margin.left + "," + margin.top + ")");
+            
 
 
 //Scale linear
-const x = d3.scaleLinear().domain([0,100]).range([10,w - 10])
-const y = d3.scaleLinear().domain([0,100]).range([(h - 10),10])
+const scale = 100
+const x = d3.scaleLinear().domain([0,scale]).range([margin.left, width])
+const y = d3.scaleLinear().domain([0,scale]).range([height,0])
 
 
 
@@ -37,8 +43,8 @@ const generateDots = (number, maxX, maxY, maxR) => {
 	return dots
 }
 const numberOfDots = 200
-const maxXAx = 100 
-const maxYAx = 100
+const maxXAx = scale 
+const maxYAx = scale
 const totalArea = maxXAx * maxYAx
 const areaPerDot = totalArea / numberOfDots  
 const radius = Math.sqrt(areaPerDot / Math.PI)
