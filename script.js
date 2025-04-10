@@ -1,9 +1,7 @@
 
 var margin = {top:10, right:10, bottom: 10, left: 10},
 width = 1150 - margin.left - margin.right,
-height = 700 - margin.top - margin.bottom;
-
-
+height = 650 - margin.top - margin.bottom;
 
 
 
@@ -42,34 +40,48 @@ const generateDots = (number, maxX, maxY, maxR) => {
 
 	return dots
 }
-const numberOfDots = 200
+var numberOfFlowers = 10
 const maxXAx = scale 
 const maxYAx = scale
 const totalArea = maxXAx * maxYAx
-const areaPerDot = totalArea / numberOfDots  
+const areaPerDot = totalArea / numberOfFlowers  
 const radius = Math.sqrt(areaPerDot / Math.PI)
 
-const dots = generateDots(numberOfDots, maxXAx, maxYAx, radius);
+const dots = generateDots(numberOfFlowers, maxXAx, maxYAx, radius);
 
 const t = d3.transition()
     .duration(5000)
     .ease(d3.easeLinear);
 
+const drawFlowers = (dots) => {
+    canvas.selectAll("*").remove();
+    canvas.append("g")
+        .selectAll("image")
+        .data(dots)
+        .enter()
+        .append("image")
+            .attr("href", (d) => d.path) // relativ URL
+            .attr("x", (d) => x(d.x) - d.r)
+            .attr("y", (d) => y(d.y) - d.r)
+            .attr("width", (d) => d.r * 10)
+            .attr("height", (d) => d.r * 10)
+}
 
-canvas.append("g")
-	.selectAll("image")
-	.data(dots)
-	.enter()
-	.append("image")
-		.attr("href", (d) => d.path) // relativ URL
-		.attr("x", (d) => x(d.x) - d.r)
-		.attr("y", (d) => y(d.y) - d.r)
-		.attr("width", (d) => d.r * 10)
-		.attr("height", (d) => d.r * 10)
 
+let updateViz = () => {
+    var flowers = parseInt(document.getElementById("numberOfBees").value);
+    var time = parseInt(document.getElementById("time").value);
+
+    console.log(flowers)
+
+    drawFlowers(generateDots(flowers, maxXAx, maxYAx, radius))
+}
 	
-	
-	
+// Update on click
+document.getElementById("updateButton").addEventListener("click", updateViz);
+
+// init
+updateViz();
 
 
 /*
