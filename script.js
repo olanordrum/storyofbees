@@ -10,7 +10,7 @@ const canvas = d3.select("#myVis")
         .append("svg") 
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
-		    .style("background-color","lightgreen")
+		    .style("background-color","white")
 
             .append("g")
             .attr("transform", "translate("+ margin.left + "," + margin.top + ")");
@@ -30,7 +30,8 @@ const generateDots = (number, maxX, maxY, maxR) => {
 	for (let i = 0; i < number; i++){
 		let imageNumber = Math.floor(Math.random() * 5) // random flower svg
 		let dot = {
-			x: Math.floor(Math.random() * maxX),
+            id : i, // each flower has an id from 0 -> n
+			x: Math.floor(Math.random() * maxX), //Random position
             y: Math.floor(Math.random() * maxY),
             r: (maxR),
 			path: "assets/flower" + imageNumber + ".svg",
@@ -45,29 +46,63 @@ const generateDots = (number, maxX, maxY, maxR) => {
 
 
 
-const t = d3.transition()
-    .duration(5000)
-    .ease(d3.easeLinear);
-
 const drawFlowers = (dots, bees, hours) => {
-    canvas.selectAll("*").remove();
+    const tRemove = d3.transition().duration(1000);
 
-    canvas.append("g")
-        .selectAll("image")
-        .data(dots)
-        .enter()
-        .append("image")
-            .attr("href", (d) => d.path)
-            .attr("x", (d) => x(d.x) - d.r)
-            .attr("y", (d) => y(d.y) - d.r)
-            .attr("width", (d) => d.r * 10)
-            .attr("height", (d) => d.r * 10)
-            .attr("transform", (d) => {
-                const angle = Math.random() * 360;
-                const cx = x(d.x);
-                const cy = y(d.y);
-                return `rotate(${angle},${cx},${cy})`;
-            });
+
+
+    // selects all current flowers
+    // Binds new data to existing flowers
+    // flowers with same id will be updated
+    // new ID´s will be added (increse in flowers
+    // missing ID´s will be removed (decrese in flowers)
+    const flowers = canvas.selectAll("image")
+            .data(dots, (d) => d.id);
+
+
+    //remove excessive flowers
+    const removeFlowers = flowers.exit()
+        .transition(tRemove)
+        .attr("opacity" ,0)//Fade
+        .remove();
+
+
+    //Remove old text
+    canvas.selectAll("text").remove();
+
+    removeFlowers.end().then(() => {
+        const t = d3.transition().duration(1000);
+        
+
+        // Transitioning "existing" flowers (same id)
+        const moveFlowers = flowers
+                .transition(t)
+                .attr("width", (d) => d.r * 10)
+                .attr("height", (d) => d.r * 10)
+                .attr("x", (d) => x(d.x) - (d.r * 5) )
+                .attr("y", (d) => y(d.y) - (d.r * 5))
+                .attr("opacity", 1);
+
+
+        moveFlowers.end().then(() => {
+            const t = d3.transition().duration(1000);
+
+            flowers.enter()
+                .append("image")
+                .attr("href", d => d.path)
+                .attr("x", d => x(d.x) - (d.r * 5))
+                .attr("y", d => y(d.y) - (d.r * 5))
+                .attr("width", 0)
+                .attr("height", 0)
+                .attr("opacity", 0)
+                .transition(t)
+                .attr("width", d => d.r * 10)
+                .attr("height", d => d.r * 10)
+                .attr("opacity", 1);
+
+});
+});
+
 
 
 
@@ -79,6 +114,7 @@ const drawFlowers = (dots, bees, hours) => {
             .attr("font-size", "20px")
             .attr("fill", "black")
             .text(bees + " bees visits about " + dots.length + " flowers in " + hours + "hours");
+
 }
 
 const calculateFlowers = (bees,hours) => {
