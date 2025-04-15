@@ -28,13 +28,19 @@ const generateDots = (number, maxX, maxY, maxR) => {
 	let dots = []
 
 	for (let i = 0; i < number; i++){
-		let imageNumber = Math.floor(Math.random() * 5) // random flower svg
+		let imageNumber = Math.floor(Math.random() * 7) + 1 // random flower svg
+        let xPos = Math.floor(Math.random() * maxX) //Random position
+        let yPos = Math.floor(Math.random() * maxY) //Random position
+        let rot = `rotate(${Math.random() * 360}, ${x(xPos)}, ${y(yPos)})`
+        console.log(rot)
+
 		let dot = {
             id : i, // each flower has an id from 0 -> n
-			x: Math.floor(Math.random() * maxX), //Random position
-            y: Math.floor(Math.random() * maxY),
+			x: xPos,
+            y: yPos,
             r: (maxR),
-			path: "assets/flower" + imageNumber + ".svg",
+			path: "assets/flower" + 1 + ".png",
+            rotation: rot
 		};
 		dots.push(dot)
 	}
@@ -76,12 +82,13 @@ const drawFlowers = (dots, bees, hours) => {
 
         // Transitioning "existing" flowers (same id)
         const moveFlowers = flowers
+
                 .transition(t)
                 .attr("width", (d) => d.r * 10)
                 .attr("height", (d) => d.r * 10)
                 .attr("x", (d) => x(d.x) - (d.r * 5) )
-                .attr("y", (d) => y(d.y) - (d.r * 5))
-                .attr("opacity", 1);
+                .attr("y", (d) => y(d.y) - (d.r * 5));
+
 
 
         moveFlowers.end().then(() => {
@@ -95,6 +102,9 @@ const drawFlowers = (dots, bees, hours) => {
                 .attr("width", 0)
                 .attr("height", 0)
                 .attr("opacity", 0)
+                //.attr("transform",d =>  d.rotation)
+
+
                 .transition(t)
                 .attr("width", d => d.r * 10)
                 .attr("height", d => d.r * 10)
