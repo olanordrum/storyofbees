@@ -1,8 +1,9 @@
 
 var margin = {top:10, right:10, bottom: 10, left: 10},
-width = window.innerWidth - margin.left - margin.right,
-height = window.innerHeight - margin.top - margin.bottom;
+width = document.getElementById("myVis").offsetWidth - margin.left - margin.right,
+height = window.innerHeight * 0.9 - margin.top - margin.bottom;
 
+console.log("widht: " + width,height)
 
 
 

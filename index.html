@@ -3,41 +3,84 @@
   <head>
     <title></title>
     <link rel="stylesheet" href="style.css" />
+    <style>
+      #scrolly {
+        position: relative;
+      }
+
+      article {
+        position: relative;
+        padding: 0 1rem;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .step {
+        margin: 2rem auto 4rem auto;
+        margin-bottom: 20rem;
+        background-color: #3b3b3b;
+        color: #fff;
+      }
+
+      .step.is-active {
+        background-color: white;
+        color: #3b3b3b;
+      }
+
+      .step p {
+        text-align: center;
+        padding: 1rem;
+        font-size: 1.5rem;
+      }
+    </style>
   </head>
 
   <body>
-    <section id='scroll'>
-      <!--  graphic container  -->
-      <div class='scroll__graphic'>
-        <!--   actual graphic/chart   -->
-        <div class='chart'>
+    <section id="scrolly">
+      <article>
+        <div class="step" data-step="1">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+          </p>
         </div>
-      </div>
-    
-      <!--  step/text container  -->
-      <div class='scroll__text'>
-        <div class='step' data-step='1'>
-         
-        </div>
-        <div id="myVis"> <label>Number of bees:</label>
-          <input type="number" id="numberOfBees" value="1" max="20" min="1" />
+        <div id = "myVis" class="step" data-step="2">
 
-          <label>Hours:</label>
-          <input type="number" id="hours" value="1" max="24" min="1" />
-          <button id="updateButton">Update</button></div>
+          <label>Number of bees:</label>
+            <input type="number" id="numberOfBees" value="1" max="20" min="1" />
+            <label>Hours:</label>
+            <input type="number" id="hours" value="1" max="24" min="1" />
+            <button id="updateButton">Update</button></div>
+            </div>
+        
         </div>
-        <div class='step' data-step='2'>
-          <p>STEP 2</p>
+        <div id = myvis class="step" data-step="3">
+          
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+          </p>
         </div>
-        <div class='step' data-step='3'>
-          <p>STEP 3</p>
+        <div class="step" data-step="4">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+          </p>
         </div>
-      </div>
-
+      </article>
     </section>
 
-    
- 
+    <section id="outro"></section>
+
+    <script src="https://unpkg.com/intersection-observer"></script>
+    <script src="https://unpkg.com/scrollama"></script>
+
     <script src="https://unpkg.com/scrollama"></script>
     <script src="https://d3js.org/d3.v6.js"></script>
 
