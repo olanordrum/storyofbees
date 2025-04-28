@@ -1,13 +1,13 @@
 
 var margin = {top:10, right:10, bottom: 10, left: 10},
-width = document.getElementById("myVis").offsetWidth - margin.left - margin.right,
+width = document.getElementById("myVisTwo").offsetWidth - margin.left - margin.right,
 height = window.innerHeight * 0.9 - margin.top - margin.bottom;
 
 console.log("widht: " + width,height)
 
 
 
-const canvas = d3.select("#myVis")
+const canvas = d3.select("#myVisTwo")
         .append("svg") 
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -148,8 +148,8 @@ let updateViz = () => {
     const maxXAx = scale 
     const maxYAx = scale
     const totalArea = maxXAx * maxYAx
-    const areaPerDot = totalArea / flowers  
-    const radius = Math.sqrt(areaPerDot / Math.PI)
+    const areaPerDot = totalArea / flowers 
+    const radius = Math.sqrt(areaPerDot / Math.PI) * 2
 
 
 
