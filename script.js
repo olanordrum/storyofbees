@@ -1,7 +1,7 @@
 
-var margin = {top:10, right:10, bottom: 10, left: 10},
-width = 1150 - margin.left - margin.right,
-height = 650 - margin.top - margin.bottom;
+var margin = {top:10, right:10, bottom: 100, left: 10},
+width = window.innerWidth - margin.left - margin.right,
+height = window.innerHeight - margin.top - margin.bottom;
 
 
 
