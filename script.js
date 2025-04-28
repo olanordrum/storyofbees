@@ -1,5 +1,5 @@
 
-var margin = {top:10, right:10, bottom: 100, left: 10},
+var margin = {top:10, right:10, bottom: 10, left: 10},
 width = window.innerWidth - margin.left - margin.right,
 height = window.innerHeight - margin.top - margin.bottom;
 
@@ -11,6 +11,7 @@ const canvas = d3.select("#myVis")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
 		    .style("background-color","white")
+
 
             .append("g")
             .attr("transform", "translate("+ margin.left + "," + margin.top + ")");
@@ -160,6 +161,13 @@ let updateViz = () => {
 }
 	
 
+function updateChartForFlowerViz() {
+    // Oppdater grafikken for STEP 2, for eksempel animere en endring i data
+    d3.select('#myVis')
+      .transition()
+      .duration(1000)
+      .style('background-color', 'lightgreen');
+  }
 
 
 
