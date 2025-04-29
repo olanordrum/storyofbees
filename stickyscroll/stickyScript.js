@@ -34,7 +34,7 @@
      .setup({
        step: "#scrolly article .step",
        offset: 0.33,
-       debug: false,
+       debug: true,
      })
      .onStepEnter(handleStepEnter);
 

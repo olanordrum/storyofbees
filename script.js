@@ -1,13 +1,13 @@
 
-var margin = {top:10, right:10, bottom: 10, left: 10},
-width = document.getElementById("myVisTwo").offsetWidth - margin.left - margin.right,
+var margin = {top:0, right:10, bottom: 10, left: 10},
+width = document.getElementById("myVis").offsetWidth - margin.left - margin.right,
 height = window.innerHeight * 0.9 - margin.top - margin.bottom;
 
 console.log("widht: " + width,height)
 
 
 
-const canvas = d3.select("#myVisTwo")
+const canvas = d3.select("#myVis")
         .append("svg") 
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -20,15 +20,16 @@ const canvas = d3.select("#myVisTwo")
 
 
 //Scale linear
-const scale = 100
+const scale = 1000
 const x = d3.scaleLinear().domain([0,scale]).range([margin.left, width])
 const y = d3.scaleLinear().domain([0,scale]).range([height,0])
 
 
 
+//Generest n numbers of dot objects with random x and y
 const generateDots = (number, maxX, maxY, maxR) => {
 	let dots = []
-
+    
 	for (let i = 0; i < number; i++){
 		let imageNumber = Math.floor(Math.random() * 7) + 1 // random flower svg
         let xPos = Math.floor(Math.random() * maxX) //Random position
@@ -41,7 +42,7 @@ const generateDots = (number, maxX, maxY, maxR) => {
 			x: xPos,
             y: yPos,
             r: (maxR),
-			path: "assets/flower" + 1 + ".png",
+			path: "assets/newFlower" + ".png",
             rotation: rot
 		};
 		dots.push(dot)
@@ -51,11 +52,10 @@ const generateDots = (number, maxX, maxY, maxR) => {
 }
 
 
-
-
-
-const drawFlowers = (dots, bees, hours) => {
+const drawFlowers = (dots) => {
     const tRemove = d3.transition().duration(1000);
+
+
 
 
 
@@ -116,23 +116,38 @@ const drawFlowers = (dots, bees, hours) => {
 });
 
 
-
-
-
-    canvas.append("text")
-            .attr("x", width / 2)
-            .attr("y", 10)
-            .attr("text-anchor", "middle")
-            .attr("font-size", "20px")
-            .attr("fill", "black")
-            .text(bees + " bees visits about " + dots.length + " flowers in " + hours + "hours");
-
 }
 
-const calculateFlowers = (bees,hours) => {
+const addInfo = (honey,wax, flowers) => {
+    d3.select(".results")
+    .html("")
+    .append('p') 
+    .text(`Flowers pollinated: ${flowers}`)
+    .append('p') 
+    .text(`Honey produced: ${honey} grams`)
+    .append('p') 
+    .text(`Beewax produced ${wax} grams`);
+}
+
+const calculateFlowers = (bees,hours,temp) => {
     const flowersPrBeePrHour = 40
     const oneHour = flowersPrBeePrHour * bees
-    return  oneHour * hours
+    const efficiency = calculateBeeEfficiency(temp)
+    return  oneHour * hours * efficiency
+}
+
+const calculateBeeEfficiency = (tempCelsius) =>  {
+    if (tempCelsius < 20) return 0.8;
+    if (tempCelsius <= 27) return 1.0;
+    if (tempCelsius <= 33) return 0.8;
+    if (tempCelsius <= 36) return 0.7;
+    return 0.1; // stressnivå
+}
+
+const calculateHoneyWax = (flowers) => {
+    let gramsHoney = flowers / 50000
+    let gramsBeesWax = gramsHoney/8
+    return [gramsHoney,gramsBeesWax]
 }
 
 
@@ -140,25 +155,38 @@ let updateViz = () => {
 
     const bees = parseInt(document.getElementById("numberOfBees").value);
     const hours = parseInt(document.getElementById("hours").value);
+    const temp = parseInt(document.getElementById("temperature").value);
 
 
 
-    const flowers = calculateFlowers(bees,hours)
+    const flowers = calculateFlowers(bees,hours,temp)
+
+    const honeyWax = calculateHoneyWax(flowers)
+    const honey = honeyWax[0]
+    const wax = honeyWax[1]
+
+    displayFlowers = flowers
+    if (displayFlowers > 10000){
+        displayFlowers = 10000
+    }
 
     const maxXAx = scale 
     const maxYAx = scale
     const totalArea = maxXAx * maxYAx
     const areaPerDot = totalArea / flowers 
-    const radius = Math.sqrt(areaPerDot / Math.PI) * 2
+    const radius2 = Math.sqrt(areaPerDot / Math.PI) 
+
+    const radius = Math.min(20, 1000 / Math.pow(displayFlowers, 0.8));
 
 
 
-    console.log("Bees: " + bees)
-    console.log("Hours: " + hours)
-    console.log("Flowers: " + flowers)
+
+    addInfo(honey ,wax, flowers)
 
 
-    drawFlowers(generateDots(flowers, maxXAx, maxYAx, radius), bees, hours)
+
+    drawFlowers(generateDots(displayFlowers, maxXAx, maxYAx, radius), bees, hours)
+
 }
 	
 

@@ -2,7 +2,7 @@
 <html>
   <head>
     <title></title>
-    <link rel="stylesheet" href="style.css" />  
+    <link rel="stylesheet" href="style.css" />
     <style>
       #scrolly {
         position: relative;
@@ -13,6 +13,7 @@
         padding: 0 1rem;
         margin: 0 auto;
         width: 100%;
+        background-color: #ffb51d;
       }
 
       .step {
@@ -23,7 +24,7 @@
       }
 
       .step.is-active {
-        background-color: white;
+        background-color: rgb(255, 255, 255);
         color: #3b3b3b;
       }
 
@@ -46,18 +47,40 @@
             aliquip ex ea commodo consequat.
           </p>
         </div>
-        <div id = "myVis" class="step" data-step="2">
 
-          <label>Number of bees:</label>
-            <input type="number" id="numberOfBees" value="1" max="20" min="1" />
-            <label>Hours:</label>
-            <input type="number" id="hours" value="1" max="24" min="1" />
-            <button id="updateButton">Update</button></div>
+        <div class="step" data-step="2">
+          <h1>A bees work</h1>
+          <div class="main-container">
+            <!--input area-->
+
+            <div class="left_side">
+              <div class="results"></div>
+              <div id="input_area" class="input_area">
+                <label>Number of bees:</label>
+                <select id="numberOfBees">
+                  <option value="1">1 Bee</option>
+                  <option value="19">10 Bees</option>
+                  <option value="40000">Small hive</option>
+                  <option value="50000">Big hive</option>
+                </select>
+                <label>Hours:</label>
+                <input type="number" id="hours" value="1" max="24" min="1" />
+                <label>Temperature:</label>
+                <input
+                  type="number"
+                  id="temperature"
+                  value="15"
+                  max="40"
+                  min="15"
+                />
+                <button id="updateButton">Update</button>
+              </div>
             </div>
-        
+            <div id="myVis" class="myVis"></div>
+          </div>
         </div>
-        <div id = myvis class="step" data-step="3">
-          
+
+        <div class="step" data-step="3">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim

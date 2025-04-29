@@ -6,7 +6,6 @@
     <title>Scrollama: Sticky Overlay Example</title>
     <meta name="description" content="Scrollama: Sticky Overlay Example" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="style.css"/>
     <style>
       #scrolly {
         position: relative;
@@ -18,7 +17,6 @@
         position: relative;
         padding: 0;
         max-width: 100%;
-        margin: 0 auto;
       }
 
       .sticky-thing {
@@ -30,7 +28,7 @@
         background-color: #8a8a8a;
         z-index: 0;
         top: 12.5vh;
-        height: 75vh;
+        height: 100vh;
         /* Center everything inside */
         display: flex;
         align-items: center;
@@ -47,12 +45,12 @@
       }
 
       .step {
-        margin: 2rem auto 4rem auto;
-        margin-bottom: 20rem;
+        margin: 0rem auto 4rem auto;
+        margin-bottom: 10rem;
         background-color: #ffffff;
         color: #fff;
-        }
-
+        max-width: 600px;
+      }
 
       .step:last-child {
         margin-bottom: 0;
@@ -67,7 +65,6 @@
         text-align: center;
         padding: 1rem;
         font-size: 1.5rem;
-
       }
     </style>
   </head>
@@ -88,12 +85,13 @@
               nisi ut aliquip ex ea commodo consequat.
             </p>
           </div>
-          <div id = "myVisTwo" class="step" data-step="2">
-            <label>Number of bees:</label>
-              <input type="number" id="numberOfBees" value="1" max="20" min="1" />
-              <label>Hours:</label>
-              <input type="number" id="hours" value="1" max="24" min="1" />
-              <button id="updateButton">Update</button></div>
+          <div class="step" data-step="2">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat.
+            </p>
           </div>
           <div class="step" data-step="3" data-color="blue">
             <p>
@@ -122,8 +120,6 @@
     <script src="https://unpkg.com/scrollama"></script>
     <script src="https://d3js.org/d3.v6.js"></script>
 
-    <script src="script.js"></script>
     <script src="stickyScript.js"></script>
-
   </body>
 </html>
