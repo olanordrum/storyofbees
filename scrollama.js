@@ -24,7 +24,7 @@ function init() {
   scroller
     .setup({
       step: "#scrolly  article .step",
-      debug: true,
+      debug: false,
       offset: 0.5
     })
     .onStepEnter(handleStepEnter)
