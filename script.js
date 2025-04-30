@@ -3,7 +3,6 @@ var margin = {top:0, right:10, bottom: 10, left: 10},
 width = document.getElementById("myVis").offsetWidth - margin.left - margin.right,
 height = window.innerHeight * 0.9 - margin.top - margin.bottom;
 
-console.log("widht: " + width,height)
 
 
 
@@ -35,7 +34,6 @@ const generateDots = (number, maxX, maxY, maxR) => {
         let xPos = Math.floor(Math.random() * maxX) //Random position
         let yPos = Math.floor(Math.random() * maxY) //Random position
         let rot = `rotate(${Math.random() * 360}, ${x(xPos)}, ${y(yPos)})`
-        console.log(rot)
 
 		let dot = {
             id : i, // each flower has an id from 0 -> n
@@ -54,8 +52,6 @@ const generateDots = (number, maxX, maxY, maxR) => {
 
 const drawFlowers = (dots) => {
     const tRemove = d3.transition().duration(1000);
-
-
 
 
 
@@ -118,11 +114,13 @@ const drawFlowers = (dots) => {
 
 }
 
-const addInfo = (honey,wax, flowers) => {
+const addInfo = (honey,wax, flowers,kilometers) => {
     d3.select(".results")
     .html("")
     .append('p') 
     .text(`Flowers pollinated: ${flowers}`)
+    .append('p') 
+    .text(`Total kilometers flown: ${kilometers}`)
     .append('p') 
     .text(`Honey produced: ${honey} grams`)
     .append('p') 
@@ -150,6 +148,12 @@ const calculateHoneyWax = (flowers) => {
     return [gramsHoney,gramsBeesWax]
 }
 
+const calculateKM = (honey) => {
+    let honeyInKG = honey/1000
+    let km = honeyInKG * 150000 // One kg of honey requires on avg 150 000 km flown
+    return km
+}
+
 
 let updateViz = () => {
 
@@ -164,6 +168,7 @@ let updateViz = () => {
     const honeyWax = calculateHoneyWax(flowers)
     const honey = honeyWax[0]
     const wax = honeyWax[1]
+    const kilometers = calculateKM(honey)
 
     displayFlowers = flowers
     if (displayFlowers > 10000){
@@ -181,7 +186,7 @@ let updateViz = () => {
 
 
 
-    addInfo(honey ,wax, flowers)
+    addInfo(honey ,wax, flowers, kilometers)
 
 
 

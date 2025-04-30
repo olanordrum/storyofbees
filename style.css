@@ -1,3 +1,34 @@
+/* ---- Pollination data ----*/
+.step[data-step="2"] {
+  display: flex;
+  flex-direction: row; 
+  justify-content: center;
+  align-items: center;
+  gap: 20px;  
+  margin: 30px auto; 
+  background-color: #dd0303;
+  height: 100vh;
+
+
+
+}
+.pollination_info {
+  top: 20;
+  height:400px;
+  width: 300px; 
+  background-color: aqua;
+  
+
+}
+.pollinationVis {
+  position: sticky;
+  flex: 1; /* Takes the remaining space for visualization */
+  max-width: 600px; 
+  background-color: rgb(4, 4, 4);
+
+}
+
+
 
 
 /* ---- A BEES WORK ----*/
@@ -16,7 +47,6 @@
 }
 
 .input_area {
-
         display: flex;
         flex-direction: column; /* Makes it a horizontal layout */
  
