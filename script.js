@@ -154,7 +154,7 @@ const calculateHoneyWax = (flowers) => {
 let updateViz = () => {
 
     const bees = parseInt(document.getElementById("numberOfBees").value);
-    const hours = parseInt(document.getElementById("hours").value);
+    const hours = parseInt(document.getElementById("time").value);
     const temp = parseInt(document.getElementById("temperature").value);
 
 

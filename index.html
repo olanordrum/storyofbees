@@ -64,8 +64,13 @@
                   <option value="50000">Big hive</option>
                 </select>
                 <label>Hours:</label>
-                <input type="number" id="hours" value="1" max="24" min="1" />
-                <label>Temperature:</label>
+                <select id="time">
+                  <option value="1">1 Hour</option>
+                  <option value="12">12 hours</option>
+                  <option value="168">One week</option>
+                  <option value="672">One month</option>
+                </select>
+                <label>Average temperature:</label>
                 <input
                   type="number"
                   id="temperature"
