@@ -3,7 +3,7 @@ var margin = {top:0, right:10, bottom: 10, left: 10},
 width = document.getElementById("myVis").offsetWidth - margin.left - margin.right,
 height = window.innerHeight * 0.9 - margin.top - margin.bottom;
 
-console.log("widht: " + width,height)
+
 
 
 
@@ -35,7 +35,7 @@ const generateDots = (number, maxX, maxY, maxR) => {
         let xPos = Math.floor(Math.random() * maxX) //Random position
         let yPos = Math.floor(Math.random() * maxY) //Random position
         let rot = `rotate(${Math.random() * 360}, ${x(xPos)}, ${y(yPos)})`
-        console.log(rot)
+
 
 		let dot = {
             id : i, // each flower has an id from 0 -> n
