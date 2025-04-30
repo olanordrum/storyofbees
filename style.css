@@ -1,5 +1,11 @@
 
 
+
+body{
+  background-color: #f2a600;
+}
+
+
 /* ---- A BEES WORK ----*/
 .main-container {
         display: flex;
