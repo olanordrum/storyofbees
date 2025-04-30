@@ -4,8 +4,6 @@ var article = scrolly.querySelector("article");
 // initialize the scrollama
 var scroller = scrollama();
 
-scroller.resize()
-
 // scrollama event handlers
 function handleStepEnter(response) {
   // response = { element, direction, index }
@@ -25,7 +23,7 @@ function init() {
   // 2. bind scrollama event handlers (this can be chained like below)
   scroller
     .setup({
-      step: "#scrolly article .step",
+      step: "#scrolly  article .step",
       debug: false,
       offset: 0.5
     })

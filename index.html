@@ -4,6 +4,55 @@
     <title></title>
     <link rel="stylesheet" href="style.css" />
     <style>
+      /*-------- sticky scrolling ------------*/
+      #stickyScrolly {
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        background-color: #ffb51d;
+        padding: 1rem;
+      }
+
+      #stickyScrolly > * {
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+      }
+
+      article [id="sticky"] {
+        position: relative;
+        padding: 0 1rem;
+        max-width: 20rem;
+      }
+
+      .sticky-thing {
+        position: -webkit-sticky;
+        position: sticky;
+        width: 100%;
+        margin: 0;
+        background-color: #8a8a8a;
+        z-index: 0;
+        top: 12.5vh;
+        height: 75vh;
+        /* Center everything inside */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .sticky-thing p {
+        padding: 1rem;
+        font-size: 8rem;
+        font-weight: 900;
+        color: #fff;
+      }
+
+      .step:last-child {
+        margin-bottom: 0;
+      }
+
+      /* ------- basic scrolling --------*/
       #scrolly {
         position: relative;
       }
@@ -17,9 +66,8 @@
       }
 
       .step {
-        margin: 2rem auto 4rem auto;
-        margin-bottom: 20rem;
-        background-color: #3b3b3b;
+        margin-top: 15rem;
+        background-color: #6b6b6b;
         color: #fff;
       }
 
@@ -35,8 +83,48 @@
       }
     </style>
   </head>
-
   <body>
+    <section id="stickyScrolly">
+      <article id="sticky">
+        <div class="step" data-step="1">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+          </p>
+        </div>
+        <div class="step" data-step="2">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+          </p>
+        </div>
+        <div class="step" data-step="3">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+          </p>
+        </div>
+        <div class="step" data-step="4">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+          </p>
+        </div>
+      </article>
+
+      <div class="sticky-thing">
+        <p>0</p>
+      </div>
+    </section>
+
     <section id="scrolly">
       <article>
         <div class="step" data-step="1">
@@ -49,7 +137,6 @@
         </div>
 
         <div class="step" data-step="2">
-          <h1>A bees work</h1>
           <div class="main-container">
             <!--input area-->
 
@@ -113,6 +200,7 @@
     <script src="https://d3js.org/d3.v6.js"></script>
 
     <script src="script.js"></script>
+    <script src="scrollamaSticky.js"></script>
     <script src="scrollama.js"></script>
   </body>
 </html>
