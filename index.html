@@ -24,6 +24,7 @@
         position: relative;
         padding: 0 1rem;
         max-width: 20rem;
+        background-color: #ffb51d;
       }
 
       .sticky-thing {
@@ -71,6 +72,18 @@
         color: #fff;
       }
 
+      #stickyScrolly .step {
+        border-radius: 10px;
+        background-color: #9b6700;
+        color: #694600;
+      }
+
+      #stickyScrolly .step.step.is-active {
+        border-radius: 10px;
+        background-color: #100f0f;
+        color: #fbf9f5;
+      }
+
       .step.is-active {
         background-color: rgb(255, 255, 255);
         color: #3b3b3b;
@@ -79,7 +92,7 @@
       .step p {
         text-align: center;
         padding: 1rem;
-        font-size: 1.5rem;
+        font-size: 2rem;
       }
     </style>
   </head>
@@ -87,12 +100,7 @@
     <section id="stickyScrolly">
       <article id="sticky">
         <div class="step" data-step="1">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
-          </p>
+          <p>3/4 of the worlds plants depend on pollinating</p>
         </div>
         <div class="step" data-step="2">
           <p>
@@ -120,12 +128,10 @@
         </div>
       </article>
 
-      <div class="sticky-thing">
-        <p>0</p>
-      </div>
+      <div id="sticky-thing" class="sticky-thing"></div>
     </section>
 
-    <section id="scrolly">
+    <section id="scrolly" class="scrolly">
       <article>
         <div class="step" data-step="1">
           <p>
@@ -200,7 +206,9 @@
     <script src="https://d3js.org/d3.v6.js"></script>
 
     <script src="script.js"></script>
-    <script src="scrollamaSticky.js"></script>
-    <script src="scrollama.js"></script>
+    <script src="pollinationScript.js"></script>
+
+    <script src="scrolloma/scrollamaSticky.js"></script>
+    <script src="scrolloma/scrollama.js"></script>
   </body>
 </html>
