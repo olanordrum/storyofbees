@@ -19,7 +19,8 @@
         el.classList.add("is-active");
 
         // update graphic based on step
-        sticky.querySelector("p").innerText = el.dataset.step;
+        //sticky.querySelector("p").innerText = el.dataset.step;
+        updateChart(+el.dataset.step)
       }
 
       function init() {
