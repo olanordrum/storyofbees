@@ -72,8 +72,11 @@ let drawWaffleChart = (recs,filled) => {
 
 const updateChart = (number) => {
     switch(number){
+        case 0: 
+            drawWaffleChart(100,0);
+            break;
         case 1: 
-            drawWaffleChart(100,70);
+            drawWaffleChart(100,75);
             break;
 
         case 2: 
