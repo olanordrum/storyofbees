@@ -53,6 +53,18 @@
         margin-bottom: 0;
       }
 
+      #stickyScrolly .step {
+        margin-top: 40rem;
+        border-radius: 10px;
+        background-color: #9b6700;
+        color: #694600;
+      }
+
+      #stickyScrolly .step.is-active {
+        background-color: #0f0d0d;
+        color: #e2d8ca;
+      }
+
       /* ------- basic scrolling --------*/
       #scrolly {
         position: relative;
@@ -68,24 +80,12 @@
 
       .step {
         margin-top: 15rem;
-        background-color: #6b6b6b;
+        background-color: #48810f;
         color: #fff;
       }
 
-      #stickyScrolly .step {
-        border-radius: 10px;
-        background-color: #9b6700;
-        color: #694600;
-      }
-
-      #stickyScrolly .step.step.is-active {
-        border-radius: 10px;
-        background-color: #100f0f;
-        color: #fbf9f5;
-      }
-
       .step.is-active {
-        background-color: rgb(255, 255, 255);
+        background-color: rgb(1, 0, 0);
         color: #3b3b3b;
       }
 
@@ -99,32 +99,28 @@
   <body>
     <section id="stickyScrolly">
       <article id="sticky">
+        <div class="step" data-step="0">
+          <p>
+            Pollination is the highest agricultural contributor to yields
+            worldwide
+          </p>
+        </div>
         <div class="step" data-step="1">
-          <p>3/4 of the worlds plants depend on pollinating</p>
+          <p>
+            Three out of four crops across the globe producing fruits or seeds
+            for human use as food depend, at least in part on pollinators
+          </p>
         </div>
         <div class="step" data-step="2">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
-          </p>
+          <p>Pollinators affect 35% of global agriculture land</p>
         </div>
         <div class="step" data-step="3">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
+            Supporting the production of 87 of the leading food crops worldwide
           </p>
         </div>
         <div class="step" data-step="4">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
-          </p>
+          <p>How dependent are different foods on pollinator insects?</p>
         </div>
       </article>
 
