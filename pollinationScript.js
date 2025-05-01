@@ -7,7 +7,7 @@ const polCanvas = d3.select(".sticky-thing")
     .append("svg") 
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-    .style("background-color","ffb51d")
+    .style("background-color","#ffb51d")
 
 
     .append("g")
@@ -15,7 +15,7 @@ const polCanvas = d3.select(".sticky-thing")
 
 
 
-let recs = {}
+// ------- Waffle chart -------------
 
 const makeData = (number,percentFilled) => { 
     let recs =d3.range(number).map((d,i) => ({
@@ -26,17 +26,15 @@ const makeData = (number,percentFilled) => {
 }
 
 
-let numberOfRecs = 100
-
-let cols = 10
-let rows = 10
-let size = 25
-let gap = 2
 
 
-let offset = 120
+
 
 let drawWaffleChart = (recs,filled) => {
+    let cols = 10
+    let rows = 10
+    let size = 25
+    let offset = 120
 
 
     polCanvas.selectAll("circle").remove();
@@ -70,6 +68,75 @@ let drawWaffleChart = (recs,filled) => {
 }
 
 
+
+
+
+// --------- Plant Dependency chart ----------
+
+
+const dependencyData = [
+    {
+    dependencyPercent: [0,0],
+    dependency: "No dependency",
+    plants:["Cereals", "Roots and tubers", "Fruit and Veg","Legumes", "Sugar crops"],
+    example: ["Wheat","Rice","Barley","Oats"]
+    },
+
+    {
+    dependencyPercent: [0,0.1],
+    dependency: "Little dependency",
+    plants:["Groundnuts", "Fruit and Veg","Legumes", "Oilcrops"],
+    example: ["Oranges","Poppy seed","Beans","Lemons"]
+    },
+
+    {
+    dependencyPercent: [0.1,0.4],
+    dependency: "Modest dependency",
+    plants:["Coconut and ocra", "Fruits","Soybeans", "Oilcrops", "CoffeBeans"],
+    example: ["Sunflower seeds","Strawberrys","Eggplant","Coconuts"]
+    },
+    {
+    dependencyPercent: [0.4,0.9],
+    dependency: "High dependency",
+    plants:["Nuts", "Fruits","Avocados"],
+    example: ["Apples","Blueberries","Almonds","Cashew nuts"]
+    },
+
+    {
+    dependencyPercent: [0.9,1],
+    dependency: "Essential",
+    plants:["Cocoa Beans", "Fruits","Brazil nuts"],
+    example: ["Kiwi","Melons","Pumpkin","Cashew nuts"]
+    },
+]
+
+
+let drawDependencyScatter = (dependencyData) => {
+
+    polCanvas.selectAll("*").remove();
+    let radius = 70
+
+    const colorScale = d3.scaleLinear()
+        .domain([0, 1])
+        .range(["Green", "Red"]);
+
+
+    let xDepenceny = d3.scaleLinear().domain([0,1]).range([radius,width-radius])
+    let yDependency = d3.scaleLinear().domain([0,5]).range([height - radius,radius])
+
+
+    polCanvas.selectAll("circle")
+                .data(dependencyData)
+                .enter()
+                .append("circle")
+                    .attr("cx", (d) => xDepenceny(d.dependencyPercent[1]))
+                    .attr("cy", (_,i) => yDependency(i))
+                    .attr("r", radius)
+                    .attr("fill", (d) => colorScale(d.dependencyPercent[1]))
+
+}
+
+
 const updateChart = (number) => {
     switch(number){
         case 0: 
@@ -84,11 +151,11 @@ const updateChart = (number) => {
             break;
 
         case 3: 
-            drawWaffleChart(100,30);
+            drawDependencyScatter(dependencyData);
             break;
 
         case 4: 
-            drawWaffleChart(100,40);
+            drawWaffleChart(100,30);
             break;
 
     }
