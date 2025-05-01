@@ -27,6 +27,10 @@
         background-color: #ffb51d;
       }
 
+      #sticky {
+        padding-bottom: 60vh;
+      }
+
       .sticky-thing {
         position: -webkit-sticky;
         position: sticky;
@@ -50,7 +54,7 @@
       }
 
       .step:last-child {
-        margin-bottom: 0;
+        margin-bottom: 100;
       }
 
       #stickyScrolly .step {
@@ -94,9 +98,56 @@
         padding: 1rem;
         font-size: 2rem;
       }
+
+      .tooltip {
+        position: absolute;
+        display: none;
+        background-color: white;
+        border: 1px solid #ccc;
+        padding: 8px;
+        font-size: 14px;
+        border-radius: 4px;
+        pointer-events: none;
+        z-index: 1000;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      }
     </style>
   </head>
   <body>
+    <div id="tooltip" class="tooltip"></div>
+    <div class="step" data-step="4">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat.
+      </p>
+    </div>
+    <div class="step" data-step="4">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat.
+      </p>
+    </div>
+    <div class="step" data-step="4">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat.
+      </p>
+    </div>
+    <div class="step" data-step="4">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat.
+      </p>
+    </div>
+
     <section id="stickyScrolly">
       <article id="sticky">
         <div class="step" data-step="0">
@@ -120,7 +171,7 @@
           </p>
         </div>
         <div class="step" data-step="4">
-          <p>How dependent are different foods on pollinator insects?</p>
+          <p>How dependent are different foods on pollinating insects?</p>
         </div>
       </article>
 
@@ -167,7 +218,7 @@
                   max="40"
                   min="15"
                 />
-                <button id="updateButton">Update</button>
+                <button id="updateButton">Pollinate!</button>
               </div>
             </div>
             <div id="myVis" class="myVis"></div>
