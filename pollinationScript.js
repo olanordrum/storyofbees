@@ -15,6 +15,10 @@ const polCanvas = d3.select(".sticky-thing")
 
 
 
+
+const tooltip = d3.select("#tooltip");
+
+
 // ------- Waffle chart -------------
 
 const makeData = (number,percentFilled) => { 
@@ -27,18 +31,16 @@ const makeData = (number,percentFilled) => {
 
 
 
-
-
-
 let drawWaffleChart = (recs,filled) => {
     let cols = 10
     let rows = 10
     let size = 25
     let offset = 120
 
-
     polCanvas.selectAll("circle").remove();
     polCanvas.selectAll("text").remove();
+    polCanvas.selectAll("image").remove();
+
 
 
     let data = makeData(recs,filled)
@@ -73,40 +75,49 @@ let drawWaffleChart = (recs,filled) => {
 
 // --------- Plant Dependency chart ----------
 
-
 const dependencyData = [
     {
     dependencyPercent: [0,0],
     dependency: "No dependency",
     plants:["Cereals", "Roots and tubers", "Fruit and Veg","Legumes", "Sugar crops"],
-    example: ["Wheat","Rice","Barley","Oats"]
+    example: ["Wheat","Rice","Barley","Oats"],
+    x:0.2,
+    image:"wheat.png",
     },
 
     {
     dependencyPercent: [0,0.1],
     dependency: "Little dependency",
     plants:["Groundnuts", "Fruit and Veg","Legumes", "Oilcrops"],
-    example: ["Oranges","Poppy seed","Beans","Lemons"]
+    example: ["Oranges","Poppy seed","Beans","Lemons"],
+    x:0.6,
+    image:"palmoil.png",
     },
 
     {
     dependencyPercent: [0.1,0.4],
     dependency: "Modest dependency",
     plants:["Coconut and ocra", "Fruits","Soybeans", "Oilcrops", "CoffeBeans"],
-    example: ["Sunflower seeds","Strawberrys","Eggplant","Coconuts"]
+    example: ["Sunflower seeds","Strawberrys","Eggplant","Coconuts"],
+    x:0.3,
+    image:"strawberry.png",
     },
     {
     dependencyPercent: [0.4,0.9],
     dependency: "High dependency",
     plants:["Nuts", "Fruits","Avocados"],
-    example: ["Apples","Blueberries","Almonds","Cashew nuts"]
+    example: ["Apples","Blueberries","Almonds","Cashew nuts"],
+    x:0.1,
+    image:"apple.png",
     },
 
     {
     dependencyPercent: [0.9,1],
     dependency: "Essential",
     plants:["Cocoa Beans", "Fruits","Brazil nuts"],
-    example: ["Kiwi","Melons","Pumpkin","Cashew nuts"]
+    example: ["Kiwi","Melons","Pumpkin","Cashew nuts"],
+    x:0.6,
+    image:"watermelon.png",
     },
 ]
 
@@ -114,28 +125,112 @@ const dependencyData = [
 let drawDependencyScatter = (dependencyData) => {
 
     polCanvas.selectAll("*").remove();
-    let radius = 70
+    polCanvas.selectAll("image").remove();
+
+    let radius = 120
 
     const colorScale = d3.scaleLinear()
-        .domain([0, 1])
-        .range(["Green", "Red"]);
+        .domain([0,0.1,0.4,0.9,1])
+        .range(["#a8e6a3", "#fff89c", "#ffd27f", "#ff8c5a", "#e84545"]);
 
 
     let xDepenceny = d3.scaleLinear().domain([0,1]).range([radius,width-radius])
     let yDependency = d3.scaleLinear().domain([0,5]).range([height - radius,radius])
 
 
+
     polCanvas.selectAll("circle")
                 .data(dependencyData)
                 .enter()
                 .append("circle")
-                    .attr("cx", (d) => xDepenceny(d.dependencyPercent[1]))
-                    .attr("cy", (_,i) => yDependency(i))
+                    .attr("cx", (d) => xDepenceny(d.x))
+                    .attr("cy", (_,i) => yDependency(i*1.2))
                     .attr("r", radius)
-                    .attr("fill", (d) => colorScale(d.dependencyPercent[1]))
+                    .attr("fill", (d,i) => colorScale(d.dependencyPercent[1]))
+                    .on('mouseover', function (event, d) {
+                        d3.select(this).transition()
+                             .duration('50')
+                             .attr('opacity', '.70')
+                        d3.select("#tooltip")
+                             .style("display", "block")
+                             .html(`<strong>${d.dependency} ${d.dependencyPercent[0]* 100}% - ${d.dependencyPercent[1]* 100}%</strong><br/><br/>Examples:<br/> ${d.example.join(", \n")}`);
+                    })
+                    .on("mousemove", (event) => {
+                        tooltip
+                            .style("left", (event.pageX - 150) + "px")
+                            .style("top", (event.pageY + 20) + "px");
+                    })
+                    .on('mouseout', function () {
+                        d3.select(this).transition()
+                            .duration('50')
+                            .attr('opacity', '1');
+                        tooltip.style("display", "none");
+});
+
+//Add fruit png´s
+    let iconSize = radius * 0.6
+    polCanvas.selectAll("image")
+            .data(dependencyData)
+            .enter()
+            .append("image")
+            .attr("x", d => xDepenceny(d.x) - iconSize/2)
+            .attr("y", (_,i) => yDependency(i*1.2) - iconSize/2)
+            .attr("width", iconSize)  // bildets bredde og høyde lik sirkelens diameter
+            .attr("height", iconSize)
+            .attr("href", (d) =>  "assets/" + d.image + ""); 
+
+
+
+
+    // Legend
+    // Legend gradient
+let defs = polCanvas.append("defs");
+let gradient = defs.append("linearGradient")
+    .attr("id", "legendGradient")
+    .attr("x1", "0%")
+    .attr("x2", "100%");
+
+colorScale.range().forEach((color, i) => {
+    gradient.append("stop")
+        .attr("offset", `${i / (colorScale.range().length - 1) * 100}%`)
+        .attr("stop-color", color);
+});
+
+    // Draw legend bar
+    let legendWidth = 200;
+    let legendHeight = 15;
+    let legendX = 10;
+    let legendY = height - 60;
+/*
+    polCanvas.append("rect")
+        .attr("x", legendX)
+        .attr("y", legendY)
+        .attr("width", legendWidth)
+        .attr("height", legendHeight)
+        .style("fill", "url(#legendGradient)")
+*/
+    // Add text labels
+    polCanvas.append("text")
+        .attr("x", xDepenceny(0.6))
+        .attr("y", yDependency(-1))
+        .text("Hover to see more details")
+        .style("font-size", "20px")
+
+
+        /*
+    polCanvas.append("text")
+        .attr("x", legendX)
+        .attr("y", legendY + legendHeight + 15)
+        .text("0%");
+
+    polCanvas.append("text")
+        .attr("x", legendX + legendWidth - 30)
+        .attr("y", legendY + legendHeight + 15)
+        .text("100%");
+
+*/
 
 }
-
 
 const updateChart = (number) => {
     switch(number){
@@ -151,13 +246,12 @@ const updateChart = (number) => {
             break;
 
         case 3: 
-            drawDependencyScatter(dependencyData);
+            drawWaffleChart(100,30); 
             break;
 
         case 4: 
-            drawWaffleChart(100,30);
+             drawDependencyScatter(dependencyData);
             break;
-
     }
 }
 
