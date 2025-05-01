@@ -9,12 +9,17 @@ function handleStepEnter(response) {
   // response = { element, direction, index }
   // add to color to current step
   response.element.classList.add("is-active");
+  var el = response.element;
+  updateChartFlowerVis(+el.dataset.step)
 }
 
 function handleStepExit(response) {
   // response = { element, direction, index }
   // remove color from current step
   response.element.classList.remove("is-active");
+
+
+
 }
 
 function init() {

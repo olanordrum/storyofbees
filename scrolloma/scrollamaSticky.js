@@ -10,7 +10,8 @@
 
       // scrollama event handlers
       function handleStepEnter(response) {
-        // response = { element, direction, index }
+        //response2 = { element, direction, index }
+
         var el = response.element;
 
         // remove is-active from all steps
@@ -19,7 +20,18 @@
         el.classList.add("is-active");
 
         // update graphic based on step
-        sticky.querySelector("p").innerText = el.dataset.step;
+        //sticky.querySelector("p").innerText = el.dataset.step;
+        updateChart(+el.dataset.step)
+      }
+
+      function handleStepProgress(response){
+
+        var el = response.element;
+
+        var val = el.getAttribute("data-step");
+
+        var progress = response.progress
+
       }
 
       function init() {
@@ -28,8 +40,11 @@
             step: "#stickyScrolly article .step",
             offset: 0.5,
             debug: false,
+            progress:true,
+            
           })
-          .onStepEnter(handleStepEnter);
+          .onStepEnter(handleStepEnter)
+          .onStepProgress(handleStepProgress); 
 
         // setup resize event
         window.addEventListener("resize", scroller.resize);

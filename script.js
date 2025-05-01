@@ -3,7 +3,7 @@ var margin = {top:0, right:10, bottom: 10, left: 10},
 width = document.getElementById("myVis").offsetWidth - margin.left - margin.right,
 height = window.innerHeight * 0.9 - margin.top - margin.bottom;
 
-console.log("widht: " + width,height)
+
 
 
 
@@ -11,7 +11,9 @@ const canvas = d3.select("#myVis")
         .append("svg") 
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
-		    .style("background-color","white")
+		    .style("background-color","#f2a600")
+ 
+         
 
 
             .append("g")
@@ -35,7 +37,7 @@ const generateDots = (number, maxX, maxY, maxR) => {
         let xPos = Math.floor(Math.random() * maxX) //Random position
         let yPos = Math.floor(Math.random() * maxY) //Random position
         let rot = `rotate(${Math.random() * 360}, ${x(xPos)}, ${y(yPos)})`
-        console.log(rot)
+
 
 		let dot = {
             id : i, // each flower has an id from 0 -> n
@@ -52,10 +54,9 @@ const generateDots = (number, maxX, maxY, maxR) => {
 }
 
 
+
 const drawFlowers = (dots) => {
     const tRemove = d3.transition().duration(1000);
-
-
 
 
 
@@ -152,7 +153,6 @@ const calculateHoneyWax = (flowers) => {
 
 
 let updateViz = () => {
-
     const bees = parseInt(document.getElementById("numberOfBees").value);
     const hours = parseInt(document.getElementById("time").value);
     const temp = parseInt(document.getElementById("temperature").value);
@@ -187,16 +187,32 @@ let updateViz = () => {
 
     drawFlowers(generateDots(displayFlowers, maxXAx, maxYAx, radius), bees, hours)
 
+
 }
 	
 
-function updateChartForFlowerViz() {
-    // Oppdater grafikken for STEP 2, for eksempel animere en endring i data
-    d3.select('#myVis')
-      .transition()
-      .duration(1000)
-      .style('background-color', 'lightgreen');
-  }
+const updateChartFlowerVis = (number) => {
+    console.log(number)
+    switch(number){
+        case 1: 
+        
+            break;
+
+        case 2: 
+
+
+            break;
+
+        case 3: 
+
+            break;
+
+        case 4: 
+
+            break;
+
+    }
+}
 
 
 
