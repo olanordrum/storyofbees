@@ -11,7 +11,9 @@ const canvas = d3.select("#myVis")
         .append("svg") 
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
-		    .style("background-color","white")
+		    .style("background-color","#f2a600")
+ 
+         
 
 
             .append("g")
@@ -52,10 +54,9 @@ const generateDots = (number, maxX, maxY, maxR) => {
 }
 
 
+
 const drawFlowers = (dots) => {
     const tRemove = d3.transition().duration(1000);
-
-
 
 
 
@@ -152,7 +153,6 @@ const calculateHoneyWax = (flowers) => {
 
 
 let updateViz = () => {
-
     const bees = parseInt(document.getElementById("numberOfBees").value);
     const hours = parseInt(document.getElementById("time").value);
     const temp = parseInt(document.getElementById("temperature").value);
@@ -187,16 +187,32 @@ let updateViz = () => {
 
     drawFlowers(generateDots(displayFlowers, maxXAx, maxYAx, radius), bees, hours)
 
+
 }
 	
 
-function updateChartForFlowerViz() {
-    // Oppdater grafikken for STEP 2, for eksempel animere en endring i data
-    d3.select('#myVis')
-      .transition()
-      .duration(1000)
-      .style('background-color', 'lightgreen');
-  }
+const updateChartFlowerVis = (number) => {
+    console.log(number)
+    switch(number){
+        case 1: 
+        
+            break;
+
+        case 2: 
+
+
+            break;
+
+        case 3: 
+
+            break;
+
+        case 4: 
+
+            break;
+
+    }
+}
 
 
 
