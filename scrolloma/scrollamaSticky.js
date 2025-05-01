@@ -38,7 +38,7 @@
         scroller
           .setup({
             step: "#stickyScrolly article .step",
-            offset: 0.5,
+            offset: 0.9,
             debug: false,
             progress:true,
             

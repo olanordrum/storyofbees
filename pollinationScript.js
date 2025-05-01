@@ -1,4 +1,4 @@
-var margin = {top:0, right:10, bottom: 30, left: 20},
+var margin = {top:0, right:10, bottom: 40, left: 20},
 width = document.getElementById("sticky-thing").offsetWidth  - margin.left - margin.right,
 height = document.getElementById("sticky-thing").offsetHeight - margin.top - margin.bottom;
 
@@ -34,8 +34,9 @@ const makeData = (number,percentFilled) => {
 let drawWaffleChart = (recs,filled) => {
     let cols = 10
     let rows = 10
-    let size = 25
     let offset = 120
+
+    let size = Math.min((width - offset) / cols, height / rows) * 0.53;
 
     polCanvas.selectAll("circle").remove();
     polCanvas.selectAll("text").remove();
@@ -49,13 +50,6 @@ let drawWaffleChart = (recs,filled) => {
     let yWaffleChart = d3.scaleLinear().domain([0,rows]).range([height,0])
 
 
-    polCanvas.append("text")
-        .attr("x", -10)
-        .attr("y", height )
-        .attr("text-anchor","start")
-        .attr("font-size","48px")
-        .attr("fill", "black")
-        .text(filled + "%")
 
     polCanvas.selectAll("circle")
             .data(data)
@@ -64,8 +58,14 @@ let drawWaffleChart = (recs,filled) => {
                 .attr("cx", (d) => xWaffleChart(d.id % cols))
                 .attr("cy", (d) => yWaffleChart(Math.floor(d.id / rows)))
                 .attr("r", size)
-                .attr("fill", (d) => d.filled ? "white" : "black")
+                .attr("fill", (d) =>"white")
 
+    d3.selectAll("circle")
+        .attr("fill", (d) =>"white")
+        .transition()
+        .duration(1000)
+        //.delay((d, i) => i * 100)
+        .attr("fill", (d) => d.filled ?  "black" : "white")
 
 }
 

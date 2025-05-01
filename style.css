@@ -87,3 +87,38 @@ label {
     background-color: #d59100;
   }
 
+  #frontpage{
+    display: flex;
+    align-items: center;
+    justify-content: center ;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(12, 233, 233);
+    text-align: center;
+
+  }
+
+  #frontpage p{
+    font-size: 20rem;
+    font-weight: bold;
+    color: white;                /* Kontrast mot bakgrunnen */
+    max-width: 90%; 
+  }
+
+.step[id="1"] {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center ;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(12, 233, 233);
+  text-align: center;
+ }
+
+ .step[id="1"] p{
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;                /* Kontrast mot bakgrunnen */
+  max-width: 90%; 
+ }
