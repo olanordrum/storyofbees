@@ -153,7 +153,9 @@ let drawDependencyScatter = (dependencyData) => {
                              .attr('opacity', '.70')
                         d3.select("#tooltip")
                              .style("display", "block")
-                             .html(`<strong>${d.dependency} ${d.dependencyPercent[0]* 100}% - ${d.dependencyPercent[1]* 100}%</strong><br/><br/>Examples:<br/> ${d.example.join(", \n")}`);
+                             .html(`<strong>${d.dependency} ${d.dependencyPercent[0]* 100}% - ${d.dependencyPercent[1]* 100}%</strong><br/>
+                             ${d.plants.join(", ")} <br/><br/>
+                             <strong>Examples:<strong><br/> ${d.example.join(", \n")}`);
                     })
                     .on("mousemove", (event) => {
                         tooltip
@@ -180,56 +182,12 @@ let drawDependencyScatter = (dependencyData) => {
             .attr("href", (d) =>  "assets/" + d.image + ""); 
 
 
-
-
-    // Legend
-    // Legend gradient
-let defs = polCanvas.append("defs");
-let gradient = defs.append("linearGradient")
-    .attr("id", "legendGradient")
-    .attr("x1", "0%")
-    .attr("x2", "100%");
-
-colorScale.range().forEach((color, i) => {
-    gradient.append("stop")
-        .attr("offset", `${i / (colorScale.range().length - 1) * 100}%`)
-        .attr("stop-color", color);
-});
-
-    // Draw legend bar
-    let legendWidth = 200;
-    let legendHeight = 15;
-    let legendX = 10;
-    let legendY = height - 60;
-/*
-    polCanvas.append("rect")
-        .attr("x", legendX)
-        .attr("y", legendY)
-        .attr("width", legendWidth)
-        .attr("height", legendHeight)
-        .style("fill", "url(#legendGradient)")
-*/
-    // Add text labels
+    // Label
     polCanvas.append("text")
         .attr("x", xDepenceny(0.6))
         .attr("y", yDependency(-1))
         .text("Hover to see more details")
         .style("font-size", "20px")
-
-
-        /*
-    polCanvas.append("text")
-        .attr("x", legendX)
-        .attr("y", legendY + legendHeight + 15)
-        .text("0%");
-
-    polCanvas.append("text")
-        .attr("x", legendX + legendWidth - 30)
-        .attr("y", legendY + legendHeight + 15)
-        .text("100%");
-
-*/
-
 }
 
 const updateChart = (number) => {
