@@ -32,9 +32,9 @@ const makeData = (number,percentFilled) => {
 
 
 let drawWaffleChart = (recs,filled) => {
-    let cols = 100
-    let rows = 100
-    let offset = 12
+    let cols = 10
+    let rows = 10
+    let offset = 120
 
     let size = Math.min((width - offset) / cols, height / rows) * 0.53;
 
@@ -67,7 +67,6 @@ let drawWaffleChart = (recs,filled) => {
         .attr("fill", (d) => d.filled ?  "black" : "white")
 
 }
-
 
 
 
@@ -234,11 +233,11 @@ const updateChart = (number) => {
             break;
 
         case 2: 
-            drawWaffleChart(10000,7500);
+            drawWaffleChart(100,35);
             break;
 
         case 3: 
-            drawWaffleChart(10000,3000); 
+            drawWaffleChart(100,30); 
             break;
 
         case 4: 
