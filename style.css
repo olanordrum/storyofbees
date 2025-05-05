@@ -93,7 +93,7 @@ label {
     justify-content: center ;
     width: 100vw;
     height: 100vh;
-    background-color: rgb(12, 233, 233);
+    background-color: #ffb51d;
     text-align: center;
 
   }
@@ -101,7 +101,7 @@ label {
   #frontpage p{
     font-size: 20rem;
     font-weight: bold;
-    color: white;                /* Kontrast mot bakgrunnen */
+    color: #ffe0a1;                /* Kontrast mot bakgrunnen */
     max-width: 90%; 
   }
 
@@ -112,13 +112,14 @@ label {
   justify-content: center ;
   width: 100vw;
   height: 100vh;
-  background-color: rgb(12, 233, 233);
+  background-color: #ffb51d;
   text-align: center;
+
  }
 
  .step[id="1"] p{
   font-size: 2rem;
   font-weight: bold;
-  color: white;                /* Kontrast mot bakgrunnen */
+  color: #ffe0a1;                /* Kontrast mot bakgrunnen */
   max-width: 90%; 
  }

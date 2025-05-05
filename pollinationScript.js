@@ -32,9 +32,9 @@ const makeData = (number,percentFilled) => {
 
 
 let drawWaffleChart = (recs,filled) => {
-    let cols = 10
-    let rows = 10
-    let offset = 120
+    let cols = 100
+    let rows = 100
+    let offset = 12
 
     let size = Math.min((width - offset) / cols, height / rows) * 0.53;
 
@@ -61,10 +61,9 @@ let drawWaffleChart = (recs,filled) => {
                 .attr("fill", (d) =>"white")
 
     d3.selectAll("circle")
-        .attr("fill", (d) =>"white")
         .transition()
+        .delay((d,i) => i/4)
         .duration(1000)
-        //.delay((d, i) => i * 100)
         .attr("fill", (d) => d.filled ?  "black" : "white")
 
 }
@@ -187,24 +186,59 @@ let drawDependencyScatter = (dependencyData) => {
         .attr("x", xDepenceny(0.6))
         .attr("y", yDependency(-1))
         .text("Hover to see more details")
-        .style("font-size", "20px")
+        .style("font-size", "30px")
+        .style("fill", "#D49F00" )
+}
+
+
+
+let drawCrop = () => {
+    polCanvas.selectAll("*").remove();
+
+    let xCrop = d3.scaleLinear().domain([0,12]).range([0,width])
+    let yCrop= d3.scaleLinear().domain([0,8]).range([height,0])
+
+
+
+    const imgData = [
+        {row: 2, col: 2, img: "crop.png"},
+        {row: 2, col: 6, img: "crop.png"},
+        {row: 6, col: 2, img: "crop.png"},
+        {row: 6, col: 6, img: "colorCrop.png"},
+    ]
+
+    let imgSize = 200
+    let spacing = 20
+
+    polCanvas.selectAll("image")
+        .data(imgData)
+        .enter()
+        .append("image")
+            .attr("x", d => xCrop(d.col) )
+            .attr("y", d => yCrop(d.row) )
+            .attr("width", imgSize)
+            .attr("height", imgSize)
+            .attr("href", d => "assets/" + d.img)
+            .style("opacity", 0)
+            .transition()
+            .delay((d,i) => i * 500)
+            .duration(500)
+            .style("opacity", 1)
+
 }
 
 const updateChart = (number) => {
     switch(number){
-        case 0: 
-            drawWaffleChart(100,0);
-            break;
         case 1: 
-            drawWaffleChart(100,75);
+            drawCrop();
             break;
 
         case 2: 
-            drawWaffleChart(100,35);
+            drawWaffleChart(10000,7500);
             break;
 
         case 3: 
-            drawWaffleChart(100,30); 
+            drawWaffleChart(10000,3000); 
             break;
 
         case 4: 
@@ -214,7 +248,6 @@ const updateChart = (number) => {
 }
 
 //init
-drawWaffleChart(100,70);
 
 
 
