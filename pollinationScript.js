@@ -129,29 +129,35 @@ let drawDependencyScatter = (dependencyData) => {
 
     const colorScale = d3.scaleLinear()
         .domain([0,0.1,0.4,0.9,1])
-        .range(["#a8e6a3", "#fff89c", "#ffd27f", "#ff8c5a", "#e84545"]);
+        .range(["#fff7cc", "#fce28b", "#f7c744", "#f0aa1a", "#de9a13"]);
+
+    const colorScaleRedGreen = d3.scaleLinear()
+        .domain([0,0.1,0.4,0.9,1])
+        .range(["green", "#b6cc35", "#ffe700", "#ff9900", "red"]);
 
 
     let xDepenceny = d3.scaleLinear().domain([0,1]).range([radius,width-radius])
     let yDependency = d3.scaleLinear().domain([0,5]).range([height - radius,radius])
 
 
-
+    let x = 0.5
     polCanvas.selectAll("circle")
                 .data(dependencyData)
                 .enter()
                 .append("circle")
-                    .attr("cx", (d) => xDepenceny(d.x))
+                    .attr("cx", (d) => xDepenceny(d.dependencyPercent[0]))
                     .attr("cy", (_,i) => yDependency(i*1.2))
                     .attr("r", radius)
                     .attr("fill", (d,i) => colorScale(d.dependencyPercent[1]))
+                    .attr("stroke", colorScale(0.1))
+                    .attr("stroke-width", 3)
                     .on('mouseover', function (event, d) {
                         d3.select(this).transition()
                              .duration('50')
                              .attr('opacity', '.70')
                         d3.select("#tooltip")
                              .style("display", "block")
-                             .html(`<strong>${d.dependency} ${d.dependencyPercent[0]* 100}% - ${d.dependencyPercent[1]* 100}%</strong><br/>
+                             .html(`<strong><span style="color:${colorScaleRedGreen(d.dependencyPercent[0])};">${d.dependency}</span>  ${d.dependencyPercent[0]* 100}% - ${d.dependencyPercent[1]* 100}%</strong><br/>
                              ${d.plants.join(", ")} <br/><br/>
                              <strong>Examples:<strong><br/> ${d.example.join(", \n")}`);
                     })
@@ -173,7 +179,7 @@ let drawDependencyScatter = (dependencyData) => {
             .data(dependencyData)
             .enter()
             .append("image")
-            .attr("x", d => xDepenceny(d.x) - iconSize/2)
+            .attr("x", d => xDepenceny(d.dependencyPercent[0]) - iconSize/2)
             .attr("y", (_,i) => yDependency(i*1.2) - iconSize/2)
             .attr("width", iconSize)  // bildets bredde og høyde lik sirkelens diameter
             .attr("height", iconSize)
@@ -184,9 +190,11 @@ let drawDependencyScatter = (dependencyData) => {
     polCanvas.append("text")
         .attr("x", xDepenceny(0.6))
         .attr("y", yDependency(-1))
-        .text("Hover to see more details")
+        .text("Hover for details")
         .style("font-size", "30px")
         .style("fill", "#D49F00" )
+
+  
 }
 
 
