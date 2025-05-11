@@ -141,24 +141,27 @@ const drawFlowers = (dots) => {
 
 }
 
-const addInfo = (honey,wax, flowers) => {
+const addInfo = (honey,wax, flowers,km) => {
     d3.select(".results")
     .html("")
     .append('p') 
-    .text(`Flowers pollinated: ${flowers}`)
+    .text(`Flowers pollinated: ${d3.format(",.1f")(flowers)}`)
     .append('p') 
-    .text(`Honey produced: ${honey} grams`)
+    .text(`Honey produced: ${honey}`)
     .append('p') 
-    .text(`Beewax produced ${wax} grams`);
+    .text(`Beewax produced: ${wax} grams`)
+    .append('p') 
+    .text(` Kilometres flown: ${km}`);
 }
 
 const calculateFlowers = (bees,hours,temp) => {
-    const flowersPrBeePrHour = 40
+    const flowersPrBeePrHour = 75
     const oneHour = flowersPrBeePrHour * bees
     const efficiency = calculateBeeEfficiency(temp)
     return  oneHour * hours * efficiency
 }
 
+// Calucating bees efficiency based on average temp
 const calculateBeeEfficiency = (tempCelsius) =>  {
     if (tempCelsius < 20) return 0.8;
     if (tempCelsius <= 27) return 1.0;
@@ -168,9 +171,36 @@ const calculateBeeEfficiency = (tempCelsius) =>  {
 }
 
 const calculateHoneyWax = (flowers) => {
-    let gramsHoney = flowers / 50000
-    let gramsBeesWax = gramsHoney/8
-    return [gramsHoney,gramsBeesWax]
+    let flowersForOneKG = 2737500
+    let kgOfHoney = flowers/flowersForOneKG
+    let gramsHoney = kgOfHoney * 1000
+    let gramsBeesWax = d3.format(",.0f")(gramsHoney/8)
+    let honeyText = calculateHoneyMeasurement(gramsHoney)
+    let km = d3.format(",.0f")(150000 * kgOfHoney)
+    return [honeyText,gramsBeesWax,km]
+}
+
+let calculateHoneyMeasurement = (honey) => {
+    let teaspoon = 7 // 7 grams
+    let tablespoon = honey / 14 // 14 grams
+    let cups = tablespoon / 16 // one cup -> 16 tablespoons
+    let kg = cups / 3
+
+    if (honey < teaspoon){
+        return "Less than 1 teaspoon"
+    }
+    else if (tablespoon < 16){
+        return d3.format(",.0f")(tablespoon) + " tablespoons"
+    }
+    else if (cups < 3){
+        return d3.format(",.0f")(cups) + " cups"
+    }
+    else {
+        return d3.format(",.0f")(kg) + " kilograms"
+    }
+
+
+    
 }
 
 
@@ -186,10 +216,11 @@ let updateViz = () => {
     const honeyWax = calculateHoneyWax(flowers)
     const honey = honeyWax[0]
     const wax = honeyWax[1]
+    const kmFlewn = honeyWax[2]
 
     displayFlowers = flowers
-    if (displayFlowers > 10000){
-        displayFlowers = 10000
+    if (displayFlowers > 20000){
+        displayFlowers = 20000
     }
 
     const maxXAx = scale 
@@ -198,12 +229,12 @@ let updateViz = () => {
     const areaPerDot = totalArea / flowers 
     const radius2 = Math.sqrt(areaPerDot / Math.PI) 
 
-    const radius = Math.min(20, 1000 / Math.pow(displayFlowers, 0.8));
+    const radius = Math.min(20, 600 / Math.pow(displayFlowers, 0.55));
 
 
 
 
-    addInfo(honey ,wax, flowers)
+    addInfo(honey ,wax, flowers,kmFlewn)
 
 
 
