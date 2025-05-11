@@ -11,7 +11,6 @@
         display: -ms-flexbox;
         display: flex;
         background-color: #ffb51d;
-        padding: 1rem;
         margin-top: 2rem;
       }
 
@@ -23,8 +22,6 @@
 
       article [id="sticky"] {
         position: relative;
-        padding: 0 1rem;
-        max-width: 20rem;
         background-color: #ffb51d;
       }
 
@@ -35,7 +32,7 @@
       .sticky-thing {
         position: -webkit-sticky;
         position: sticky;
-        width: 100%;
+        width: 100vw;
         margin: 0;
         background-color: #8a8a8a;
         z-index: 0;
@@ -49,7 +46,7 @@
 
       .sticky-thing p {
         padding: 1rem;
-        font-size: 8rem;
+        font-size: 10rem;
         font-weight: 900;
         color: #fff;
       }
@@ -60,18 +57,14 @@
 
       #stickyScrolly .step {
         margin-top: 40rem;
+        margin-left: 2rem;
         border-radius: 10px;
-        background-color: #de9a13;
-        color: #bf8614;
+        background-color: #ffb51d;
+        color: #ffe0a1;
       }
 
       #stickyScrolly .step:first-child {
-        margin-top: 20;
-      }
-
-      #stickyScrolly .step.is-active {
-        background-color: #9b6700;
-        color: #694600;
+        margin-top: 30;
       }
 
       /* ------- basic scrolling --------*/
@@ -81,14 +74,17 @@
 
       article {
         position: relative;
-        padding: 0 1rem;
         margin: 0 auto;
         width: 100%;
         background-color: #ffb51d;
       }
 
+      #scrolly article {
+        background-color: #f2a600;
+      }
+
       .step {
-        margin-top: 15rem;
+        margin-top: 2rem;
         background-color: #814c0f;
         color: #fff;
       }
@@ -101,7 +97,11 @@
       .step p {
         text-align: center;
         padding: 1rem;
-        font-size: 2rem;
+        font-size: 3rem;
+        font-size: clamp(1rem, 2vw + 1rem, 5rem);
+      }
+      .left_side p {
+        font-size: clamp(1rem, 2vw + 1rem, 1.5rem);
       }
 
       .tooltip {
@@ -150,12 +150,16 @@
       <article id="sticky">
         <div class="step" data-step="1">
           <p>
-            Three out of four crops across the globe producing fruits or seeds
-            for human use as food depend, at least in part on pollinators
+            <span style="color: #af8302"> Three out of four </span>crops across
+            the globe producing fruits or seeds for human use as food depend, at
+            least in part on pollinators
           </p>
         </div>
         <div class="step" data-step="2">
-          <p>Pollinators affect 35% of global agriculture land</p>
+          <p>
+            Pollinators affect <span style="color: #af8302"> 35 percent</span>of
+            global agriculture land
+          </p>
         </div>
         <div class="step" data-step="4">
           <p>How dependent are different foods on pollinating insects?</p>
@@ -167,7 +171,8 @@
 
     <section id="scrolly" class="scrolly">
       <article>
-        <div class="step" data-step="2" id="flowers">
+        <div class="step" id="4"></div>
+        <div class="step" id="flowers">
           <div class="main-container">
             <!--input area-->
 

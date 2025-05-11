@@ -22,13 +22,14 @@ body{
 .left_side {
   display: flex;
   flex-direction: column;
-  width: 300px; /* Set a fixed width for input fields */
+  width: 300px; 
   padding: 20px;
   margin-right: 20px;
   background-color: #ffb51d;
   border-radius: 8px;
 
 }
+
 
 .input_area {
         display: flex;
@@ -105,14 +106,16 @@ label {
   }
 
   #frontpage p{
-    font-size: 20rem;
+    font-size: clamp(1rem, 10vw + 2rem, 20rem);
     font-weight: bold;
     color: #ffe0a1;               
     max-width: 90%; 
   }
 .step[id="1"],
 .step[id="2"],
-.step[id="3"]{
+.step[id="3"],
+.step[id="4"]{
+  padding: 1rem;
   margin-top: 2rem;
   display: flex;
   flex-direction: column; 
@@ -129,7 +132,13 @@ label {
  .step[id="2"] p,
  .step[id="3"] p{
   font-size: 2rem;
+  font-size: clamp(1rem, 1vw + 1rem, 10rem);
   font-weight: bold;
   color: #ffe0a1;               
   max-width: 90%; 
  }
+
+ .flowers {
+  margin-top: 2rem;
+ }
+

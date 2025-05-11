@@ -1,4 +1,4 @@
-var margin = {top:0, right:10, bottom: 40, left: 20},
+var margin = {top:0, right:10, bottom: 40, left: 20}
 width = document.getElementById("sticky-thing").offsetWidth  - margin.left - margin.right,
 height = document.getElementById("sticky-thing").offsetHeight - margin.top - margin.bottom;
 
@@ -14,12 +14,12 @@ const polCanvas = d3.select(".sticky-thing")
     .attr("transform", "translate("+ margin.left + "," + margin.top + ")");
 
 
-
+let state = 0
 
 const tooltip = d3.select("#tooltip");
 
 
-// ------- Waffle chart -------------
+// ------- Crop chart -------------
 
 const makeData = (number,percentFilled) => { 
     let recs =d3.range(number).map((d,i) => ({
@@ -58,13 +58,13 @@ let drawWaffleChart = (recs,filled) => {
                 .attr("cx", (d) => xWaffleChart(d.id % cols))
                 .attr("cy", (d) => yWaffleChart(Math.floor(d.id / rows)))
                 .attr("r", size)
-                .attr("fill", (d) =>"white")
+                .attr("fill", (d) =>"#ffe0a1")
 
     d3.selectAll("circle")
-        .transition()
-        .delay((d,i) => i/4)
+        .transition(2000)
+        .delay((d,i) => i * 50)
         .duration(1000)
-        .attr("fill", (d) => d.filled ?  "black" : "white")
+        .attr("fill", (d) => d.filled ?  "#af8302" : "#ffe0a1")
 
 }
 
@@ -125,7 +125,7 @@ let drawDependencyScatter = (dependencyData) => {
     polCanvas.selectAll("*").remove();
     polCanvas.selectAll("image").remove();
 
-    let radius = 120
+    let radius = width/10
 
     const colorScale = d3.scaleLinear()
         .domain([0,0.1,0.4,0.9,1])
@@ -133,7 +133,7 @@ let drawDependencyScatter = (dependencyData) => {
 
     const colorScaleRedGreen = d3.scaleLinear()
         .domain([0,0.1,0.4,0.9,1])
-        .range(["green", "#b6cc35", "#ffe700", "#ff9900", "red"]);
+        .range(["green", "#b6cc35", "#ffe800", "orange", "red"]);
 
 
     let xDepenceny = d3.scaleLinear().domain([0,1]).range([radius,width-radius])
@@ -149,15 +149,14 @@ let drawDependencyScatter = (dependencyData) => {
                     .attr("cy", (_,i) => yDependency(i*1.2))
                     .attr("r", radius)
                     .attr("fill", (d,i) => colorScale(d.dependencyPercent[1]))
-                    .attr("stroke", colorScale(0.1))
-                    .attr("stroke-width", 3)
+                    .attr("opacity", 0)
                     .on('mouseover', function (event, d) {
                         d3.select(this).transition()
                              .duration('50')
                              .attr('opacity', '.70')
                         d3.select("#tooltip")
                              .style("display", "block")
-                             .html(`<strong><span style="color:${colorScaleRedGreen(d.dependencyPercent[0])};">${d.dependency}</span>  ${d.dependencyPercent[0]* 100}% - ${d.dependencyPercent[1]* 100}%</strong><br/>
+                             .html(`<strong><span style="color:${colorScaleRedGreen(d.dependencyPercent[1])};">${d.dependency}</span>  ${d.dependencyPercent[0]* 100}% - ${d.dependencyPercent[1]* 100}%</strong><br/>
                              ${d.plants.join(", ")} <br/><br/>
                              <strong>Examples:<strong><br/> ${d.example.join(", \n")}`);
                     })
@@ -173,6 +172,9 @@ let drawDependencyScatter = (dependencyData) => {
                         tooltip.style("display", "none");
 });
 
+
+
+
 //Add fruit png´s
     let iconSize = radius * 0.6
     polCanvas.selectAll("image")
@@ -183,15 +185,21 @@ let drawDependencyScatter = (dependencyData) => {
             .attr("y", (_,i) => yDependency(i*1.2) - iconSize/2)
             .attr("width", iconSize)  // bildets bredde og høyde lik sirkelens diameter
             .attr("height", iconSize)
-            .attr("href", (d) =>  "assets/" + d.image + ""); 
+            .attr("href", (d) =>  "assets/" + d.image + "")
+            .attr("opacity", 0); 
 
+    d3.selectAll("circle , image")
+        .transition(3000)
+        .delay((d,i) => i * 100)
+        .duration(1000)
+        .attr("opacity", 1)
 
     // Label
     polCanvas.append("text")
         .attr("x", xDepenceny(0.6))
         .attr("y", yDependency(-1))
         .text("Hover for details")
-        .style("font-size", "30px")
+        .style("font-size", "clamp(2rem, 3vw + 1rem, 2rem)")
         .style("fill", "#D49F00" )
 
   
@@ -214,8 +222,8 @@ let drawCrop = () => {
         {row: 6, col: 6, img: "colorCrop.png"},
     ]
 
-    let imgSize = 200
-    let spacing = 20
+    let imgSize = width / 5
+
 
     polCanvas.selectAll("image")
         .data(imgData)
@@ -235,6 +243,7 @@ let drawCrop = () => {
 }
 
 const updateChart = (number) => {
+    state = number
     switch(number){
         case 1: 
             drawCrop();
@@ -254,7 +263,15 @@ const updateChart = (number) => {
     }
 }
 
-//init
+const resize = () =>{
+    console.log("resize")
+
+    margin.width = document.getElementById("sticky-thing").offsetWidth  - margin.left - margin.right
+    margin.height = document.getElementById("sticky-thing").offsetHeight - margin.top - margin.bottom
+    updateChart(state)
+}
+
+window.addEventListener("resize", resize)
 
 
 
