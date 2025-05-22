@@ -89,6 +89,7 @@ const generateDots = (number, maxX, maxY, maxR) => {
 const drawFlowers = (dots) => {
     const tRemove = d3.transition().duration(1000);
 
+    canvas.selectAll("text").remove();
 
 
     // selects all current flowers
@@ -107,8 +108,7 @@ const drawFlowers = (dots) => {
         .remove();
 
 
-    //Remove old text
-    canvas.selectAll("text").remove();
+    
 
     removeFlowers.end().then(() => {
         const t = d3.transition().duration(1000);
@@ -166,8 +166,8 @@ const addInfo = (honey,wax, flowers,km) => {
 const calculateFlowers = (bees,hours,temp) => {
     const flowersPrBeePrHour = 75
     const oneHour = flowersPrBeePrHour * bees
-    const efficiency = calculateBeeEfficiency(temp)
-    return  oneHour * hours * efficiency
+    //const efficiency = calculateBeeEfficiency(temp)
+    return  oneHour * hours 
 }
 
 // Calucating bees efficiency based on average temp
@@ -244,6 +244,43 @@ let updateViz = () => {
 
 
     addInfo(honey ,wax, flowers,kmFlewn)
+    canvas.selectAll("text").remove();
+
+    const textElement = canvas.append("text")
+    .attr("x", width / 2)
+    .attr("y", height / 2)
+    .attr("text-anchor", "middle")
+    .attr("dominant-baseline", "middle")
+    .attr("font-size", "24px")
+    .attr("fill", "#000");
+
+if(temp < 15 || temp > 40){
+    canvas.selectAll("image").remove();
+    if (temp < 15) {
+        textElement.append("tspan")
+            .attr("x",x( width / 2))
+            .attr("dy", "0em")
+            .text(temp + "°C is too cold for bees to forage.")
+            .attr("fill", "#ffe0a1");
+        textElement.append("tspan")
+            .attr("x", x( width / 2))
+            .attr("dy", "1.2em")
+            .text("Between 10°C and 15°C bees will cluster together")
+            .attr("fill", "#ffe0a1");
+    } else {
+        textElement.append("tspan")
+            .attr("x", x( width / 2))
+            .attr("dy", "0em")
+            .text(temp + "°C is too warm for bees to forag.")
+            .attr("fill", "#ffe0a1");
+        textElement.append("tspan")
+            .attr("x", x( width / 2))
+            .attr("dy", "1.2em")
+            .text("Above 40°C bees will collect water and start fanning the hive to cool down")
+            .attr("fill", "#ffe0a1");
+    }
+    return;
+}
 
 
 
