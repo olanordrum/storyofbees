@@ -142,3 +142,27 @@ label {
   margin-top: 2rem;
  }
 
+ h2 {
+  color: #af8302;
+  padding-left: 1em;
+}
+
+#sources {
+  margin-top: 2em;
+  font-size: 0.95em;
+}
+
+#sources ul {
+  list-style-type: none;
+  padding-left: 1.5em;
+}
+
+#sources a {
+  color: #ffe0a1;
+  text-decoration: none;
+}
+
+#sources a:hover {
+  text-decoration: underline;
+}
+
