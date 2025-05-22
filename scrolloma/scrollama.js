@@ -7,7 +7,6 @@ var scroller = scrollama();
 // scrollama event handlers
 function handleStepEnter(response) {
   // response = { element, direction, index }
-  // add to color to current step
   response.element.classList.add("is-active");
   var el = response.element;
   updateChartFlowerVis(+el.dataset.step)
@@ -15,7 +14,6 @@ function handleStepEnter(response) {
 
 function handleStepExit(response) {
   // response = { element, direction, index }
-  // remove color from current step
   response.element.classList.remove("is-active");
 
 
@@ -23,9 +21,6 @@ function handleStepExit(response) {
 }
 
 function init() {
-  // 1. setup the scroller with the bare-bones options
-  // 		this will also initialize trigger observations
-  // 2. bind scrollama event handlers (this can be chained like below)
   scroller
     .setup({
       step: "#scrolly  article .step",
@@ -35,7 +30,7 @@ function init() {
     .onStepEnter(handleStepEnter)
     .onStepExit(handleStepExit);
 
-  // 3. setup resize event
+
   window.addEventListener("resize", scroller.resize);
 }
 

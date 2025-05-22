@@ -3,6 +3,14 @@ width = document.getElementById("sticky-thing").offsetWidth  - margin.left - mar
 height = document.getElementById("sticky-thing").offsetHeight - margin.top - margin.bottom;
 
 
+//This file contains the three visualizations in the "sticky" part of the project
+// The 3/4 of all crops visualization
+// The crop field visualization
+// The food dependency visualization 
+
+
+
+
 const polCanvas = d3.select(".sticky-thing")
     .append("svg") 
     .attr("width", width + margin.left + margin.right)
@@ -19,7 +27,7 @@ let state = 0
 const tooltip = d3.select("#tooltip");
 
 
-// ------- Crop chart -------------
+// ------- Crop field chart -------------
 
 const makeData = (number,percentFilled) => { 
     let recs =d3.range(number).map((d,i) => ({
@@ -73,6 +81,7 @@ let drawWaffleChart = (recs,filled) => {
 
 // --------- Plant Dependency chart ----------
 
+// Data
 const dependencyData = [
     {
     dependencyPercent: [0,0],
@@ -145,7 +154,7 @@ let drawDependencyScatter = (dependencyData) => {
                 .data(dependencyData)
                 .enter()
                 .append("circle")
-                    .attr("cx", (d) => xDepenceny(d.dependencyPercent[0]))
+                    .attr("cx", (d) => xDepenceny(d.dependencyPercent[1]))
                     .attr("cy", (_,i) => yDependency(i*1.2))
                     .attr("r", radius)
                     .attr("fill", (d,i) => colorScale(d.dependencyPercent[1]))
@@ -181,7 +190,7 @@ let drawDependencyScatter = (dependencyData) => {
             .data(dependencyData)
             .enter()
             .append("image")
-            .attr("x", d => xDepenceny(d.dependencyPercent[0]) - iconSize/2)
+            .attr("x", d => xDepenceny(d.dependencyPercent[1]) - iconSize/2)
             .attr("y", (_,i) => yDependency(i*1.2) - iconSize/2)
             .attr("width", iconSize)  // bildets bredde og høyde lik sirkelens diameter
             .attr("height", iconSize)
@@ -205,7 +214,7 @@ let drawDependencyScatter = (dependencyData) => {
   
 }
 
-
+// ------------ 3/4 crop visualization ------------
 
 let drawCrop = () => {
     polCanvas.selectAll("*").remove();
@@ -242,6 +251,8 @@ let drawCrop = () => {
 
 }
 
+
+// Scrollama switch to change display and start animations
 const updateChart = (number) => {
     state = number
     switch(number){

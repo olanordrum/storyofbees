@@ -1,4 +1,3 @@
-      // using d3 for convenience
       var main = document.querySelector("main");
       var scrolly = document.querySelector("#stickyScrolly");
       var sticky = scrolly.querySelector(".sticky-thing");
@@ -19,19 +18,14 @@
         steps.forEach((step) => step.classList.remove("is-active"));
         el.classList.add("is-active");
 
-        // update graphic based on step
-        //sticky.querySelector("p").innerText = el.dataset.step;
+        //Update graphics
         updateChart(+el.dataset.step)
       }
 
       function handleStepProgress(response){
-
         var el = response.element;
-
         var val = el.getAttribute("data-step");
-
         var progress = response.progress
-
       }
 
       function init() {
@@ -46,7 +40,7 @@
           .onStepEnter(handleStepEnter)
           .onStepProgress(handleStepProgress); 
 
-        // setup resize event
+
         window.addEventListener("resize", scroller.resize);
       }
 

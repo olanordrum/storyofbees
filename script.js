@@ -1,4 +1,11 @@
 
+
+// THis file contains the flower field visualization
+
+
+
+
+
 var margin = {top:0, right:10, bottom: 10, left: 10},
 width = document.getElementById("myVis").offsetWidth - margin.left - margin.right,
 height = window.innerHeight * 0.9 - margin.top - margin.bottom;
@@ -10,14 +17,12 @@ const canvas = d3.select("#myVis")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
 		    .style("background-color","#ffb51d")
- 
-         
-
-
             .append("g")
             .attr("transform", "translate("+ margin.left + "," + margin.top + ")");
             
-//Add exclamation mark
+
+
+//Add exclamation mark (info)
 d3.select("#input_area")
     .append("svg")
     .attr("width", 30)
@@ -59,7 +64,7 @@ const y = d3.scaleLinear().domain([0,scale]).range([height,0])
 
 
 
-//Generest n numbers of dot objects with random x and y
+//Generate n numbers of dot objects with random x and y
 const generateDots = (number, maxX, maxY, maxR) => {
 	let dots = []
     
@@ -71,7 +76,7 @@ const generateDots = (number, maxX, maxY, maxR) => {
 
 
 		let dot = {
-            id : i, // each flower has an id from 0 -> n
+            id : i, // each flower has an id from 0 -> (number - 1)
 			x: xPos,
             y: yPos,
             r: (maxR),
@@ -85,7 +90,7 @@ const generateDots = (number, maxX, maxY, maxR) => {
 }
 
 
-
+//Draw flowers with animations
 const drawFlowers = (dots) => {
     const tRemove = d3.transition().duration(1000);
 
@@ -136,8 +141,6 @@ const drawFlowers = (dots) => {
                 .attr("width", 0)
                 .attr("height", 0)
                 .attr("opacity", 0)
-                //.attr("transform",d =>  d.rotation)
-
 
                 .transition(t)
                 .attr("width", d => d.r * 10)
@@ -150,6 +153,7 @@ const drawFlowers = (dots) => {
 
 }
 
+//Text info on left side
 const addInfo = (honey,wax, flowers,km) => {
     d3.select(".results")
     .html("")
@@ -170,7 +174,7 @@ const calculateFlowers = (bees,hours,temp) => {
     return  oneHour * hours 
 }
 
-// Calucating bees efficiency based on average temp
+// Calucating bees efficiency based on average temp (NOT IN USE)
 const calculateBeeEfficiency = (tempCelsius) =>  {
     if (tempCelsius < 20) return 0.8;
     if (tempCelsius <= 27) return 1.0;
@@ -182,6 +186,7 @@ const calculateBeeEfficiency = (tempCelsius) =>  {
 const calculateHoneyWax = (flowers) => {
     let flowersForOneKG = 2737500
     let kgOfHoney = flowers/flowersForOneKG
+    console.log(kgOfHoney)
     let gramsHoney = kgOfHoney * 1000
     let gramsBeesWax = d3.format(",.0f")(gramsHoney/8)
     let honeyText = calculateHoneyMeasurement(gramsHoney)
@@ -193,8 +198,11 @@ let calculateHoneyMeasurement = (honey) => {
     let teaspoon = 7 // 7 grams
     let tablespoon = honey / 14 // 14 grams
     let cups = tablespoon / 16 // one cup -> 16 tablespoons
-    let kg = cups / 3
+    let kg = honey/1000
+    console.log("kg " + kg)
+    console.log("honey param " + honey)
 
+    // Formatting string
     if (honey < teaspoon){
         return "Less than 1 teaspoon"
     }
@@ -227,6 +235,7 @@ let updateViz = () => {
     const wax = honeyWax[1]
     const kmFlewn = honeyWax[2]
 
+    // Max rendering 20 000 flowers
     displayFlowers = flowers
     if (displayFlowers > 20000){
         displayFlowers = 20000
@@ -234,9 +243,6 @@ let updateViz = () => {
 
     const maxXAx = scale 
     const maxYAx = scale
-    const totalArea = maxXAx * maxYAx
-    const areaPerDot = totalArea / flowers 
-    const radius2 = Math.sqrt(areaPerDot / Math.PI) 
 
     const radius = Math.min(20, 600 / Math.pow(displayFlowers, 0.55));
 
@@ -254,6 +260,7 @@ let updateViz = () => {
     .attr("font-size", "24px")
     .attr("fill", "#000");
 
+// 
 if(temp < 15 || temp > 40){
     canvas.selectAll("image").remove();
     if (temp < 15) {
@@ -265,7 +272,7 @@ if(temp < 15 || temp > 40){
         textElement.append("tspan")
             .attr("x", x( width / 2))
             .attr("dy", "1.2em")
-            .text("Between 10°C and 15°C bees will cluster together")
+            .text("In temperatures below 15°C bees will cluster together to maintain heat")
             .attr("fill", "#ffe0a1");
     } else {
         textElement.append("tspan")
