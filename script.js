@@ -3,31 +3,7 @@ var margin = {top:0, right:10, bottom: 10, left: 10},
 width = document.getElementById("myVis").offsetWidth - margin.left - margin.right,
 height = window.innerHeight * 0.9 - margin.top - margin.bottom;
 
-//Flower vis
-//Add vis for left side data window  honey and beeswax 
-//Cluster flowers?
-// add infromation abput economics. Honey prices etc
 
-//Food dependency
-//Fjern x akse 
-// Fix colors
-
-// Overall
-// Fix font and consistent font styles
-// Bigger text
-// consistent color pallete
-//fikk consistent colors
-// Clean up structure and style
-
-
-// improve crop visulisation. make it look like crops or a field
-// legend for food dependency
-
-
-// Added features
-// 1. timer for flower vis
-// 2. During the time you have spent on this page. one beehive have produced....
-// Mkae the page more "popping", big statements, bold colors better font
 
 const canvas = d3.select("#myVis")
         .append("svg") 
@@ -41,6 +17,39 @@ const canvas = d3.select("#myVis")
             .append("g")
             .attr("transform", "translate("+ margin.left + "," + margin.top + ")");
             
+//Add exclamation mark
+d3.select("#input_area")
+    .append("svg")
+    .attr("width", 30)
+    .attr("height", 30)
+    .style("position", "absolute")
+    .style("top", "-5px")     
+    .style("right", "7px")   
+    .append("image")
+    .attr("xlink:href", "assets/exclamationmark.svg")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("width", 30)
+    .attr("height", 30)
+    .on("mouseover", function () {
+        d3.select("#tooltip")
+        .style("display", "block")
+        .html(`The data shown is an estimate and may <br>  not reflect exact real-world values.`);
+        console.log("")
+    })
+    .on("mousemove", (event) => {
+        tooltip
+            .style("left", (event.pageX) + "px")
+            .style("top", (event.pageY) + "px");
+    })
+    .on('mouseout', function () {
+        d3.select(this).transition()
+            .duration('50')
+            .attr('opacity', '1');
+        tooltip.style("display", "none")
+    })
+;
+
 
 
 //Scale linear
@@ -242,10 +251,12 @@ let updateViz = () => {
 
 
 }
+
+
+
 	
 
 const updateChartFlowerVis = (number) => {
-    console.log(number)
     switch(number){
         case 1: 
         

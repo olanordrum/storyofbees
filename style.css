@@ -34,7 +34,7 @@ body{
 .input_area {
         display: flex;
         flex-direction: column; 
- 
+        position: relative;
       }
 
 .results {
