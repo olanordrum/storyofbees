@@ -168,7 +168,7 @@ const addInfo = (honey,wax, flowers,km) => {
 }
 
 const calculateFlowers = (bees,hours,temp) => {
-    const flowersPrBeePrHour = 75
+    const flowersPrBeePrHour = 31 // 750 flowers pr day / 24 hours = avg(31 flowers pr hour)
     const oneHour = flowersPrBeePrHour * bees
     //const efficiency = calculateBeeEfficiency(temp)
     return  oneHour * hours 
