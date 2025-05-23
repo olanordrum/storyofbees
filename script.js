@@ -158,7 +158,7 @@ const addInfo = (honey,wax, flowers,km) => {
     d3.select(".results")
     .html("")
     .append('p') 
-    .text(`Flowers pollinated: ${d3.format(",.1f")(flowers)}`)
+    .text(`Flowers visited: ${flowers}`)
     .append('p') 
     .text(`Honey produced: ${honey}`)
     .append('p') 
